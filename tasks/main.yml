@@ -57,5 +57,6 @@
     state: "{{ item.state }}"
   with_items:
     - "{{ firewall_services }}"
+  when:
     - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
