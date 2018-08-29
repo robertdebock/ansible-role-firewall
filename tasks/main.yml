@@ -11,31 +11,46 @@
     - "{{ ansible_distribution }}.yml"
     - default.yml
 
-- name: uninstall conflicting software
+- name: remove conflicting software
   package:
-    name: "{{ item }}"
+    name: "{{ item.name }}"
     state: absent
   with_items:
     - "{{ firewall_conflicting_packages }}"
 
 - name: install software
   package:
-    name: firewalld
+    name: "{{ item.name }}"
     state: present
+  with_items:
+    - "{{ firewall_required_package }}"
 
 - name: start and enable software
   service:
-    name: firewalld
+    name: "{{ firewall_service }}"
     state: started
     enabled: true
   when:
     - ansible_virtualization_type != "docker"
 
-- name: open tcp ports
+- name: open tcp ports (uwf)
+  uwf:
+    rule: "{{ item.state }}"
+    port: "{{ item.name }}"
+    proto: "{{ item.protocol }}"
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - "{{ firewall_services }}"
+    - "{{ firewall_service }}" == uwf
+    - ansible_virtualization_type != "docker"
+
+- name: open tcp ports (firewalld)
   firewalld:
     service: "{{ item.name }}"
     permanent: true
-    state: enabled
+    state: {% if item.state == "allow" %}enabled{% else %}disabled{% endif %}
   with_items:
     - "{{ firewall_services }}"
+    - "{{ firewall_service }}" == firewalld
     - ansible_virtualization_type != "docker"
