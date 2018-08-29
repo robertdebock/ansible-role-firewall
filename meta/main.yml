@@ -7,9 +7,6 @@ galaxy_info:
   min_ansible_version: 2.4
 
   platforms:
-    - name: Alpine
-      versions:
-        - all
     - name: ArchLinux
       version:
         - all
@@ -32,16 +29,16 @@ galaxy_info:
         - bionic
 
   galaxy_tags:
-    - firewall
     - alpine
     - centos
     - debian
     - el
     - fedora
+    - firewall
+    - firewalld
     - opensuse
     - rhel
     - server
-    - sudo
     - system
     - ubuntu
 
