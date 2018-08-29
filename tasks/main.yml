@@ -34,7 +34,7 @@
 
 - name: open tcp ports
   firewalld:
-    service: "{{ item.service }}"
+    service: "{{ item.name }}"
     permanent: true
     state: enabled
   with_items:

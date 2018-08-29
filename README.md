@@ -64,9 +64,9 @@ Example Playbook
     - role: robertdebock.bootstrap
     - role: robertdebock.firewall
       firewall_services:
-        - ssh
-        - http
-        - https
+        - name: ssh
+        - name: http
+        - name: https
 ```
 
 To install this role:
