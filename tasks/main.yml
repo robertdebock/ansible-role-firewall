@@ -39,3 +39,4 @@
     state: enabled
   with_items:
     - "{{ firewall_services }}"
+    - ansible_virtualization_type != "docker"
