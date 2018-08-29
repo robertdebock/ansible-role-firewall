@@ -1,3 +1,5 @@
 ---
 # vars file for firewall
-# firewall_parameter: value
+firewall_conflicting_packages:
+  - iptables
+  - uwf

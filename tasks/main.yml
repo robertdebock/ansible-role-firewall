@@ -14,10 +14,9 @@
 - name: uninstall conflicting software
   package:
     name: "{{ item }}"
-    state: present
+    state: absent
   with_items:
-    - iptables
-    - ufw
+    - "{{ firewall_conflicting_packages }}"
 
 - name: install software
   package:
