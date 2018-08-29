@@ -18,7 +18,7 @@
   with_items:
     - "{{ firewall_conflicting_packages }}"
   when:
-    - "{{ firewall_conflicting_packages}}"
+    - firewall_conflicting_packages
 
 - name: install software
   package:
@@ -27,7 +27,7 @@
   with_items:
     - "{{ firewall_required_package }}"
   when:
-    - "{{ firewall_required_package }}"
+    - firewall_required_package
 
 - name: start and enable software
   service:
@@ -36,7 +36,7 @@
     enabled: true
   when:
     - ansible_virtualization_type != "docker"
-    - "{{ firewall_service }}"
+    - firewall_service
 
 - name: open tcp ports (ufw)
   ufw:
@@ -46,7 +46,7 @@
   with_items:
     - "{{ firewall_services }}"
   when:
-    - "{{ firewall_services }}"
+    - firewall_services
     - firewall_service == "uwf"
     - ansible_virtualization_type != "docker"
 
