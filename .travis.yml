@@ -4,12 +4,12 @@ language: python
 services: docker
 
 env:
-  - version=">=2.4,<2.5" distro="alpine-latest"
-  - version=">=2.5,<2.6" distro="alpine-latest"
-  - version=">=2.6,<2.7" distro="alpine-latest"
-  - version=">=2.4,<2.5" distro="alpine-edge"
-  - version=">=2.5,<2.6" distro="alpine-edge"
-  - version=">=2.6,<2.7" distro="alpine-edge"
+  - version=">=2.4,<2.5" distro="alpine-latest" expectation="fail"
+  - version=">=2.5,<2.6" distro="alpine-latest" expectation="fail"
+  - version=">=2.6,<2.7" distro="alpine-latest" expectation="fail"
+  - version=">=2.4,<2.5" distro="alpine-edge" expectation="fail"
+  - version=">=2.5,<2.6" distro="alpine-edge" expectation="fail"
+  - version=">=2.6,<2.7" distro="alpine-edge" expectation="fail"
   - version=">=2.4,<2.5" distro="archlinux"
   - version=">=2.5,<2.6" distro="archlinux"
   - version=">=2.6,<2.7" distro="archlinux"
@@ -52,9 +52,9 @@ env:
 
 matrix:
   allow_failures:
-    - env: version=">=2.4,<2.5" distro="alpine-edge"
-    - env: version=">=2.5,<2.6" distro="alpine-edge"
-    - env: version=">=2.6,<2.7" distro="alpine-edge"
+    - env: version=">=2.4,<2.5" distro="alpine-edge" expectation="fail"
+    - env: version=">=2.5,<2.6" distro="alpine-edge" expectation="fail"
+    - env: version=">=2.6,<2.7" distro="alpine-edge" expectation="fail"
     - env: version=">=2.4,<2.5" distro="debian-unstable"
     - env: version=">=2.5,<2.6" distro="debian-unstable"
     - env: version=">=2.6,<2.7" distro="debian-unstable"
