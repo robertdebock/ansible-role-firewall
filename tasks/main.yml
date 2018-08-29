@@ -11,15 +11,26 @@
     - "{{ ansible_distribution }}.yml"
     - default.yml
 
+- name: uninstall conflicting software
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - iptables
+    - ufw
+
 - name: install software
   package:
     name: firewalld
+    state: present
 
 - name: start and enable software
   service:
     name: firewalld
     state: started
     enabled: true
+  when:
+    - ansible_virtualization_type != "docker"
 
 - name: open tcp ports
   firewalld:
