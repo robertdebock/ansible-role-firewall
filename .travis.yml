@@ -79,3 +79,4 @@ script:
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  slack: robertdebock:NJwNWpCQt3mr8HDKXb9iHCtR
