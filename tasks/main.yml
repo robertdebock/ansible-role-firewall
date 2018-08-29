@@ -42,15 +42,15 @@
     - "{{ firewall_services }}"
   when:
     - "{{ firewall_services }}"
-    - "{{ firewall_service }}" == uwf
+    - firewall_service == "uwf"
     - ansible_virtualization_type != "docker"
 
 - name: open tcp ports (firewalld)
   firewalld:
     service: "{{ item.name }}"
     permanent: true
-    state: {% if item.state == "allow" %}enabled{% else %}disabled{% endif %}
+    state: "{% if item.state == allow %}enabled{% else %}disabled{% endif %}"
   with_items:
     - "{{ firewall_services }}"
-    - "{{ firewall_service }}" == firewalld
+    - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
