@@ -49,7 +49,7 @@
   firewalld:
     service: "{{ item.name }}"
     permanent: true
-    state: "{% if item.state == allow %}enabled{% else %}disabled{% endif %}"
+    state: "{% if item.state == 'allow' %}enabled{% else %}disabled{% endif %}"
   with_items:
     - "{{ firewall_services }}"
     - firewall_service == "firewalld"
