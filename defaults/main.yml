@@ -3,4 +3,5 @@
 firewall_services:
   - name: ssh
     protocol: tcp
-    state: allow
+    rule: allow
+    state: enabled

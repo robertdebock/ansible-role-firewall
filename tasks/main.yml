@@ -40,7 +40,7 @@
 
 - name: open tcp ports (ufw)
   ufw:
-    rule: "{{ item.state }}"
+    rule: "{{ item.rule }}"
     port: "{{ item.name }}"
     proto: "{{ item.protocol }}"
   with_items:
@@ -54,7 +54,7 @@
   firewalld:
     service: "{{ item.name }}"
     permanent: true
-    state: "{% if item.state == 'allow' %}enabled{% else %}disabled{% endif %}"
+    state: "{{ item.state }}"
   with_items:
     - "{{ firewall_services }}"
     - firewall_service == "firewalld"
