@@ -68,7 +68,6 @@
   when:
     - firewall_services is defined
     - firewall_service == "iptables"
-    - ansible_virtualization_type != "docker"
   loop_control:
     label: "{{ item.name }}"
   notify:
