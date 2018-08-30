@@ -51,3 +51,18 @@
     - ansible_virtualization_type != "docker"
   loop_control:
     label: "{{ item.name }}"
+
+- name: configure iptables
+  template:
+    src: iptables.j2
+    dest: /etc/sysconfig/iptables
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - firewall_service == "iptables"
+    - ansible_virtualization_type != "docker"
+  loop_control:
+    label: "{{ item.name }}"
+  notify:
+    - reload iptables
