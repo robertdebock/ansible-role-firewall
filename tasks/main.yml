@@ -13,21 +13,21 @@
 
 - name: remove conflicting software
   package:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     state: absent
   with_items:
-    - "{{ firewall_conflicting_packages }}"
+    - "{{ firewall_packages.conflicting }}"
   when:
-    - firewall_conflicting_packages
+    - firewall_packages.conflicting is defined
 
-- name: install software
+- name: install required software
   package:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     state: present
   with_items:
-    - "{{ firewall_required_package }}"
+    - "{{ firewall_packages.required }}"
   when:
-    - firewall_required_package
+    - firewall_packages.required is defined
 
 - name: start and enable software
   service:
@@ -40,23 +40,14 @@
 
 - name: open tcp ports (ufw)
   ufw:
-    rule: "{{ item.rule }}"
+    rule: "{{ item.rule | default('allow') }}"
     port: "{{ item.name }}"
-    proto: "{{ item.protocol }}"
+    proto: "{{ item.protocol | default('tcp')}}"
   with_items:
     - "{{ firewall_services }}"
   when:
-    - firewall_services
-    - firewall_service == "uwf"
+    - firewall_services is defined
+    - firewall_service == "ufw"
     - ansible_virtualization_type != "docker"
-
-- name: open tcp ports (firewalld)
-  firewalld:
-    service: "{{ item.name }}"
-    permanent: true
-    state: "{{ item.state }}"
-  with_items:
-    - "{{ firewall_services }}"
-  when:
-    - firewall_service == "firewalld"
-    - ansible_virtualization_type != "docker"
+  loop_control:
+    label: "{{ item.name }}"

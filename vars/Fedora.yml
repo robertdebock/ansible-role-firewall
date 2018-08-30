@@ -1,9 +1,2 @@
 ---
 # vars file for firewall
-firewall_required_package:
-  - name: firewalld
-
-firewall_conflicting_packages:
-  - name: ufw
-
-firewall_service: firewalld

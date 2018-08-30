@@ -2,6 +2,3 @@
 # defaults file for firewall
 firewall_services:
   - name: ssh
-    protocol: tcp
-    rule: allow
-    state: enabled
