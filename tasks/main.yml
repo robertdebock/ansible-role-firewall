@@ -62,7 +62,7 @@
 - name: configure iptables
   template:
     src: iptables.j2
-    dest: /etc/sysconfig/iptables
+    dest: "{{ firewall_iptables_rulefile }}"
   with_items:
     - "{{ firewall_services }}"
   when:
