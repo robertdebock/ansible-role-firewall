@@ -29,7 +29,7 @@
   when:
     - firewall_packages.required is defined
 
-- name: open tcp ports (ufw)
+- name: open ports (ufw)
   ufw:
     rule: "{{ item.rule | default('allow') }}"
     port: "{{ item.name }}"
