@@ -52,6 +52,13 @@
   loop_control:
     label: "{{ item.name }}"
 
+- name: enable ufw
+  ufw:
+    state: enabled
+  when:
+    - firewall_service == "ufw"
+    - ansible_virtualization_type != "docker"
+
 - name: configure iptables
   template:
     src: iptables.j2
@@ -66,3 +73,12 @@
     label: "{{ item.name }}"
   notify:
     - reload iptables
+
+- name: start and enable iptables
+  service:
+    name: iptables
+    state: started
+    enabled: true
+  when:
+    - firewall_service == "iptables"
+    - ansible_virtualization_type != "docker"
