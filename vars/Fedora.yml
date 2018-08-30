@@ -5,6 +5,5 @@ firewall_required_package:
 
 firewall_conflicting_packages:
   - name: ufw
-  - name: iptables
 
 firewall_service: firewalld
