@@ -3,6 +3,7 @@
 firewall_packages:
   required:
     - iptables
+    - iptables-services
   conflicting:
     - firewalld
     - ufw
