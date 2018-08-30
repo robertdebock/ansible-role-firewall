@@ -29,15 +29,6 @@
   when:
     - firewall_packages.required is defined
 
-- name: start and enable software
-  service:
-    name: "{{ firewall_service }}"
-    state: started
-    enabled: true
-  when:
-    - ansible_virtualization_type != "docker"
-    - firewall_service is defined
-
 - name: open tcp ports (ufw)
   ufw:
     rule: "{{ item.rule | default('allow') }}"
@@ -73,11 +64,11 @@
   notify:
     - reload iptables
 
-- name: start and enable iptables
+- name: start and enable software
   service:
-    name: iptables
+    name: "{{ firewall_service }}"
     state: started
     enabled: true
   when:
-    - firewall_service == "iptables"
     - ansible_virtualization_type != "docker"
+    - firewall_service is defined
