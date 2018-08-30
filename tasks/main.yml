@@ -36,7 +36,7 @@
     enabled: true
   when:
     - ansible_virtualization_type != "docker"
-    - firewall_service
+    - firewall_service is defined
 
 - name: open tcp ports (ufw)
   ufw:
