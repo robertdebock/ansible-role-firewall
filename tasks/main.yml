@@ -62,7 +62,7 @@
   loop_control:
     label: "{{ item.name }}"
   notify:
-    - reload iptables
+    - reload firewall
 
 - name: start and enable software
   service:
