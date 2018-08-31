@@ -1,84 +1,83 @@
----
 sudo: required
 language: python
 services: docker
 
 env:
-  - version=">=2.4,<2.5" distro="alpine-latest"
-  - version=">=2.5,<2.6" distro="alpine-latest"
-  - version=">=2.6,<2.7" distro="alpine-latest"
-  - version=">=2.4,<2.5" distro="alpine-edge"
-  - version=">=2.5,<2.6" distro="alpine-edge"
-  - version=">=2.6,<2.7" distro="alpine-edge"
-  - version=">=2.4,<2.5" distro="archlinux"
-  - version=">=2.5,<2.6" distro="archlinux"
-  - version=">=2.6,<2.7" distro="archlinux"
-  - version=">=2.4,<2.5" distro="centos-6"
-  - version=">=2.5,<2.6" distro="centos-6"
-  - version=">=2.6,<2.7" distro="centos-6"
-  - version=">=2.4,<2.5" distro="centos-latest"
-  - version=">=2.5,<2.6" distro="centos-latest"
-  - version=">=2.6,<2.7" distro="centos-latest"
-  - version=">=2.4,<2.5" distro="debian-latest"
-  - version=">=2.5,<2.6" distro="debian-latest"
-  - version=">=2.6,<2.7" distro="debian-latest"
-  - version=">=2.4,<2.5" distro="debian-stable"
-  - version=">=2.5,<2.6" distro="debian-stable"
-  - version=">=2.6,<2.7" distro="debian-stable"
-  - version=">=2.4,<2.5" distro="debian-unstable"
-  - version=">=2.5,<2.6" distro="debian-unstable"
-  - version=">=2.6,<2.7" distro="debian-unstable"
-  - version=">=2.4,<2.5" distro="fedora-latest"
-  - version=">=2.5,<2.6" distro="fedora-latest"
-  - version=">=2.6,<2.7" distro="fedora-latest"
-  - version=">=2.4,<2.5" distro="fedora-rawhide"
-  - version=">=2.5,<2.6" distro="fedora-rawhide"
-  - version=">=2.6,<2.7" distro="fedora-rawhide"
-  - version=">=2.4,<2.5" distro="opensuse-leap"
-  - version=">=2.5,<2.6" distro="opensuse-leap"
-  - version=">=2.6,<2.7" distro="opensuse-leap"
-  - version=">=2.4,<2.5" distro="opensuse-tumbleweed"
-  - version=">=2.5,<2.6" distro="opensuse-tumbleweed"
-  - version=">=2.6,<2.7" distro="opensuse-tumbleweed"
-  - version=">=2.4,<2.5" distro="ubuntu-artful"
-  - version=">=2.5,<2.6" distro="ubuntu-artful"
-  - version=">=2.6,<2.7" distro="ubuntu-artful"
-  - version=">=2.4,<2.5" distro="ubuntu-latest"
-  - version=">=2.5,<2.6" distro="ubuntu-latest"
-  - version=">=2.6,<2.7" distro="ubuntu-latest"
-  - version=">=2.4,<2.5" distro="ubuntu-devel"
-  - version=">=2.5,<2.6" distro="ubuntu-devel"
-  - version=">=2.6,<2.7" distro="ubuntu-devel"
+- version=">=2.4,<2.5" distro="alpine-latest"
+- version=">=2.5,<2.6" distro="alpine-latest"
+- version=">=2.6,<2.7" distro="alpine-latest"
+- version=">=2.4,<2.5" distro="alpine-edge"
+- version=">=2.5,<2.6" distro="alpine-edge"
+- version=">=2.6,<2.7" distro="alpine-edge"
+- version=">=2.4,<2.5" distro="archlinux"
+- version=">=2.5,<2.6" distro="archlinux"
+- version=">=2.6,<2.7" distro="archlinux"
+- version=">=2.4,<2.5" distro="centos-6"
+- version=">=2.5,<2.6" distro="centos-6"
+- version=">=2.6,<2.7" distro="centos-6"
+- version=">=2.4,<2.5" distro="centos-latest"
+- version=">=2.5,<2.6" distro="centos-latest"
+- version=">=2.6,<2.7" distro="centos-latest"
+- version=">=2.4,<2.5" distro="debian-latest"
+- version=">=2.5,<2.6" distro="debian-latest"
+- version=">=2.6,<2.7" distro="debian-latest"
+- version=">=2.4,<2.5" distro="debian-stable"
+- version=">=2.5,<2.6" distro="debian-stable"
+- version=">=2.6,<2.7" distro="debian-stable"
+- version=">=2.4,<2.5" distro="debian-unstable"
+- version=">=2.5,<2.6" distro="debian-unstable"
+- version=">=2.6,<2.7" distro="debian-unstable"
+- version=">=2.4,<2.5" distro="fedora-latest"
+- version=">=2.5,<2.6" distro="fedora-latest"
+- version=">=2.6,<2.7" distro="fedora-latest"
+- version=">=2.4,<2.5" distro="fedora-rawhide"
+- version=">=2.5,<2.6" distro="fedora-rawhide"
+- version=">=2.6,<2.7" distro="fedora-rawhide"
+- version=">=2.4,<2.5" distro="opensuse-leap"
+- version=">=2.5,<2.6" distro="opensuse-leap"
+- version=">=2.6,<2.7" distro="opensuse-leap"
+- version=">=2.4,<2.5" distro="opensuse-tumbleweed"
+- version=">=2.5,<2.6" distro="opensuse-tumbleweed"
+- version=">=2.6,<2.7" distro="opensuse-tumbleweed"
+- version=">=2.4,<2.5" distro="ubuntu-artful"
+- version=">=2.5,<2.6" distro="ubuntu-artful"
+- version=">=2.6,<2.7" distro="ubuntu-artful"
+- version=">=2.4,<2.5" distro="ubuntu-latest"
+- version=">=2.5,<2.6" distro="ubuntu-latest"
+- version=">=2.6,<2.7" distro="ubuntu-latest"
+- version=">=2.4,<2.5" distro="ubuntu-devel"
+- version=">=2.5,<2.6" distro="ubuntu-devel"
+- version=">=2.6,<2.7" distro="ubuntu-devel"
 
 matrix:
   allow_failures:
-    - env: version=">=2.4,<2.5" distro="alpine-edge"
-    - env: version=">=2.5,<2.6" distro="alpine-edge"
-    - env: version=">=2.6,<2.7" distro="alpine-edge"
-    - env: version=">=2.4,<2.5" distro="debian-unstable"
-    - env: version=">=2.5,<2.6" distro="debian-unstable"
-    - env: version=">=2.6,<2.7" distro="debian-unstable"
-    - env: version=">=2.4,<2.5" distro="fedora-rawhide"
-    - env: version=">=2.5,<2.6" distro="fedora-rawhide"
-    - env: version=">=2.6,<2.7" distro="fedora-rawhide"
-    - env: version=">=2.4,<2.5" distro="ubuntu-devel"
-    - env: version=">=2.5,<2.6" distro="ubuntu-devel"
-    - env: version=">=2.6,<2.7" distro="ubuntu-devel"
+  - env: version=">=2.4,<2.5" distro="alpine-edge"
+  - env: version=">=2.5,<2.6" distro="alpine-edge"
+  - env: version=">=2.6,<2.7" distro="alpine-edge"
+  - env: version=">=2.4,<2.5" distro="debian-unstable"
+  - env: version=">=2.5,<2.6" distro="debian-unstable"
+  - env: version=">=2.6,<2.7" distro="debian-unstable"
+  - env: version=">=2.4,<2.5" distro="fedora-rawhide"
+  - env: version=">=2.5,<2.6" distro="fedora-rawhide"
+  - env: version=">=2.6,<2.7" distro="fedora-rawhide"
+  - env: version=">=2.4,<2.5" distro="ubuntu-devel"
+  - env: version=">=2.5,<2.6" distro="ubuntu-devel"
+  - env: version=">=2.6,<2.7" distro="ubuntu-devel"
 
 cache:
-  - pip
+- pip
 
 install:
-  - pip install --upgrade pip
-  - pip install ansible"${version}"
-  - pip install molecule
-  - pip install docker
+- pip install --upgrade pip
+- pip install ansible"${version}"
+- pip install molecule
+- pip install docker
 
 script:
-  - if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
+- if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
-  slack: robertdebock:w34z0j0QFIVI4S0osys2GZ3W
-  email: false
-  on_start: always
+  slack:
+    rooms:
+      secure: NzdQah285Pymk/f4WBLFQ10TNQ1cEsnl9hKK7z6ZcgXVsKCsb74ZMto5uFiw42VdQXWgLOdlCPy2IMEoutY7vI6ow7vTrdvpJ4+7S52K9eCSavx2YBvPneqwu9EN7Zi11RhfTsBD8UIvpunBw/gptVj75mgN2WHo8eJ7kRuFJmmawMyzoV+thsVoIHEPB50SJmY1YQtXLt7KCBRPh2v13M0WZVOLfZ863NEgHlxmi0v3MMWDfJhNnR0pyIp2hvAWap3gSpM8fhoTQJW1z5FDChpkJYDoHySNiMl2SSEzGkWzMn/rziQu4Ap6ILz0PJOsY/4x/uqeiXaECEDZgwpPo6+5xR/8LsMlYk+rs2FtVD7MSqjphWSBggQmGta2yd7xcq9RHaabHvD2kGLv21IQF+mNnKl+W5NQqfVlYTtnlF9Y1cYxpwKc0VC1H2MJTjcqE4RJDsyz4ljoNEpZNL66lmLWmQ15PRYEFappwprjPdluWM6BE56nq8oHekdYlP6HfAGz210XamH6x4J/q4AeLB9JFxMSd5Ygd9sc8EVRbx+UusFd5dbnc2+lXK5KsQWR+noJQVLI3DtI3RIi+84ez/CbXUj8TKpYuNGNvYzGeqV4S8OyFHpAezPODrdbSZg/sllw/zeYcqDEstzzqpfpf3IGp41yiM5xBfT1nViHOvc=
