@@ -1,4 +1,3 @@
----
 sudo: required
 language: python
 services: docker
@@ -75,10 +74,9 @@ install:
   - pip install docker
 
 script:
-  - if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
+   - if [ "${expectation}" = "fail" ] ; then ! molecule test --scenario-name "${distro}" ; else molecule test --scenario-name "${distro}" ; fi
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
   slack:
-    rooms:
-      secure: NzdQah285Pymk/f4WBLFQ10TNQ1cEsnl9hKK7z6ZcgXVsKCsb74ZMto5uFiw42VdQXWgLOdlCPy2IMEoutY7vI6ow7vTrdvpJ4+7S52K9eCSavx2YBvPneqwu9EN7Zi11RhfTsBD8UIvpunBw/gptVj75mgN2WHo8eJ7kRuFJmmawMyzoV+thsVoIHEPB50SJmY1YQtXLt7KCBRPh2v13M0WZVOLfZ863NEgHlxmi0v3MMWDfJhNnR0pyIp2hvAWap3gSpM8fhoTQJW1z5FDChpkJYDoHySNiMl2SSEzGkWzMn/rziQu4Ap6ILz0PJOsY/4x/uqeiXaECEDZgwpPo6+5xR/8LsMlYk+rs2FtVD7MSqjphWSBggQmGta2yd7xcq9RHaabHvD2kGLv21IQF+mNnKl+W5NQqfVlYTtnlF9Y1cYxpwKc0VC1H2MJTjcqE4RJDsyz4ljoNEpZNL66lmLWmQ15PRYEFappwprjPdluWM6BE56nq8oHekdYlP6HfAGz210XamH6x4J/q4AeLB9JFxMSd5Ygd9sc8EVRbx+UusFd5dbnc2+lXK5KsQWR+noJQVLI3DtI3RIi+84ez/CbXUj8TKpYuNGNvYzGeqV4S8OyFHpAezPODrdbSZg/sllw/zeYcqDEstzzqpfpf3IGp41yiM5xBfT1nViHOvc=
+    secure: oSQ44+45DQekaYsRtV5T6wWwBn4q22zXoeWY/Zm3fRS7laySarD4c4XglPpaaclFfWCMl9sct2M//c7gDLZlFGNOU+6GI14Xt/RyT1yHNGE7dxy3hDA6J5wu35zowPeZRm4TF3LJjyxFiZSo+XQyDKPa0sC2xEwVC2EhZ1pU9Xvqz4Ymjimfy8YvKpkcmLu12QpkK47M1KrvDXBpVlKuchIcB3jze1KVhTvzzbU5nSxp7hkMEM6kPgziZG96xCDAhzomA+BIHXEnncXMoJvQwDcT0M94gDjUdMeDV/A0Mi6P3HOFnYIKptbmsVobP6ugkhGCdKCgPI7ob88MMJYoej0DiroN8oyGfOwmn8YK7q4VhN8nspTaIAAcX1GyZmZ2akgqDaSw42vnoReacU9B9XbyDyAnttRbd2IOyp2l+rIVc4GVghYd9ecRKMIy1/OaCuqhe+IB5/B+Sdat+aiKQIYT0eWRf3cevgwaETCDECb+D4tBrWIbTx/ll7i69okAJGQxnUXWBENm3n0L9KYp03brbIRG/UIyaL0G17LVKR1CyX62kiHcFcqgr12Y6m3E/LfelaZPpcRfaPne7ryxgyJfdSCw5D7uK9txcWvpvNmhoL5If7p5DFOB9yz8JScRwvsP3LV5A6XvvapobJkAYfvgBih69KXQZXQ0L8hIcyM=
