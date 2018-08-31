@@ -79,5 +79,6 @@ script:
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
-  slack: robertdebock:${slack_token}
+  slack: robertdebock:w34z0j0QFIVI4S0osys2GZ3W
   email: false
+  on_start: always
