@@ -63,6 +63,7 @@
     label: "{{ item.name }}"
   notify:
     - reload firewall
+  validate: "iptables-restore --test %s"
 
 - name: start and enable software
   service:
