@@ -54,8 +54,6 @@
   template:
     src: iptables.j2
     dest: "{{ firewall_iptables_rulefile }}"
-  with_items:
-    - "{{ firewall_services }}"
   when:
     - firewall_services is defined
     - firewall_service == "iptables"
