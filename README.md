@@ -3,7 +3,20 @@ firewall
 
 [![Build Status](https://travis-ci.org/robertdebock/ansible-role-firewall.svg?branch=master)](https://travis-ci.org/robertdebock/ansible-role-firewall)
 
-Provides firewall for your system.
+Configures the firewall for your system.
+Different distributions use different firewall implementations. This Ansible role aims to be very simply to use. It's been designed to work with:
+
+
+|distribution|firewall       |
+|------------|---------------|
+|Alpine      |iptables       |
+|Archlinux   |not implemented|
+|CentOS 6    |iptables       |
+|CentOS 7    |firewalld      |
+|Debian      |uwf            |
+|Fedora      |frewalld       |
+|OpenSUSE    |firealld       |
+|Ubuntu      |uwf            |
 
 Context
 --------
@@ -67,6 +80,8 @@ Example Playbook
         - name: ssh
         - name: http
         - name: https
+        - name: 4992
+          protocol: tcp
 ```
 
 To install this role:
