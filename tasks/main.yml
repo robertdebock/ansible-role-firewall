@@ -86,6 +86,7 @@
     dest: "{{ firewall_iptables_rulefile }}"
     validate: "iptables-restore --test %s"
   when:
+    - ansible_virtualization_type != "docker"
     - firewall_services is defined
     - firewall_service == "iptables"
   loop_control:
