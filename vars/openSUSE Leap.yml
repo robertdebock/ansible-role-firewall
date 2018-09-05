@@ -1,2 +1,11 @@
 ---
 # vars file for firewall
+firewall_packages:
+  required:
+    - firewalld
+  conflicting:
+    - iptables
+    - iptables-services
+    - ufw
+
+firewall_service: firewalld
