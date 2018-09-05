@@ -3,6 +3,6 @@
 - name: reload firewall
   service:
     name: "{{ firewall_service }}"
-    state: restarted
+    state: reloaded
   when:
     - ansible_virtualization_type != "docker"
