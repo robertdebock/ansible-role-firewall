@@ -33,13 +33,43 @@
   ufw:
     rule: "{{ item.rule | default('allow') }}"
     port: "{{ item.name }}"
-    proto: "{{ item.protocol | default('tcp')}}"
+    proto: "{{ item.protocol | default('tcp') }}"
   with_items:
     - "{{ firewall_services }}"
   when:
     - firewall_services is defined
     - firewall_service == "ufw"
     - ansible_virtualization_type != "docker"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: open ports (firewalld-port)
+  firewalld:
+    port: "{{ item.name }}/{{ item.protocol | default('tcp') }}"
+    permanent: true
+    state: enabled
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - firewall_service == "firewalld"
+    - ansible_virtualization_type != "docker"
+    - item.name is number
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: open ports (firewalld-service)
+  firewalld:
+    service: "{{ item.name }}"
+    permanent: true
+    state: enabled
+  with_items:
+    - "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - firewall_service == "firewalld"
+    - ansible_virtualization_type != "docker"
+    - item.name is not number
   loop_control:
     label: "{{ item.name }}"
 
@@ -54,6 +84,7 @@
   template:
     src: iptables.j2
     dest: "{{ firewall_iptables_rulefile }}"
+    validate: "iptables-restore --test %s"
   when:
     - firewall_services is defined
     - firewall_service == "iptables"
@@ -61,7 +92,6 @@
     label: "{{ item.name }}"
   notify:
     - reload firewall
-  validate: "iptables-restore --test %s"
 
 - name: start and enable software
   service:
