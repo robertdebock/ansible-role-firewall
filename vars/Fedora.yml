@@ -4,8 +4,6 @@ firewall_packages:
   required:
     - firewalld
   conflicting:
-    - iptables
-    - iptables-services
     - ufw
 
 ansible_python_interpreter: /usr/bin/python3
