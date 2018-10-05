@@ -1,31 +1,18 @@
 ---
 # tasks file for firewall
-- name: load default variables
-  include_vars:
-    file: default.yml
-
-- name: load os-specific variables
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
-    - "{{ ansible_distribution }}.yml"
-    - default.yml
-
 - name: remove conflicting software
   package:
-    name: "{{ item }}"
+    name: "{{ firewall_packages.conflicting[ansible_distribution]
+          | default[firewall_packages.conflicting['default']) }}"
     state: absent
-  with_items:
-    - "{{ firewall_packages.conflicting }}"
   when:
     - firewall_packages.conflicting is defined
 
 - name: install required software
   package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - "{{ firewall_packages.required }}"
+    name: "{{ firewall_packages.required[ansible_distribution]
+          | default[firewall_packages.required['default']) }}"
+    state: "{{ firewall_package_state }}"
   when:
     - firewall_packages.required is defined
 
@@ -77,18 +64,21 @@
   ufw:
     state: enabled
   when:
-    - firewall_service == "ufw"
+    - firewall_service[ansible_distribution]
+      | default[firewall_service['default'] ) == "ufw"
     - ansible_virtualization_type != "docker"
 
 - name: configure iptables
   template:
     src: iptables.j2
-    dest: "{{ firewall_iptables_rulefile }}"
+    dest: "{{ firewall_iptables_rulefile[ansible_distribution]
+          | default[firewall_iptables_rulefile['default'] }}"
     validate: "iptables-restore --test %s"
   when:
     - ansible_virtualization_type != "docker"
     - firewall_services is defined
-    - firewall_service == "iptables"
+    - firewall_service[ansible_distribution]
+      | default[firewall_service['default'] ) == "iptables"
   loop_control:
     label: "{{ item.name }}"
   notify:
@@ -96,7 +86,8 @@
 
 - name: start and enable software
   service:
-    name: "{{ firewall_service }}"
+    name: "{{ firewall_service[ansible_distribution]
+          | default[firewall_service['default'] }}"
     state: started
     enabled: true
   when:

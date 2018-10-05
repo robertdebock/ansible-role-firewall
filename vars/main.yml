@@ -1,0 +1,52 @@
+---
+# vars file for firewall
+firewall_packages:
+  required:
+    default:
+      - ufw
+    Alpine:
+      - iptables
+    CentOS-6:
+      - iptables
+    CentOS-7:
+      - firewalld
+    Fedora:
+      - firewalld
+    openSUSE Leap:
+      - firewalld
+    openSUSE Tumbleweed:
+      - firewalld
+  conflicting:
+    default:
+      - firewalld
+    Alpine:
+      - firewalld
+      - ufw
+    CentOS-6:
+      - firewalld
+      - ufw
+    CentOS-7:
+      - ufw
+    Fedora:
+      - ufw
+    openSUSE Leap:
+      - ufw
+    openSUSE Tumbleweed:
+      - ufw
+
+firewall_service:
+  default: ufw
+  Alpine: iptables
+  CentOS-6: iptables
+  CentOS-7: firewalld
+  Fedora: firewalld
+  openSUSE Leap: firewalld
+  openSUSE Tumbleweed: firewalld
+
+firewall_iptables_rulefile:
+  Alpine: /etc/iptables/rules-save
+  CentOS-6: /etc/sysconfig/iptables
+
+ansible_python_interpreter:
+  default: []
+  CentOS-7: /usr/bin/python3
