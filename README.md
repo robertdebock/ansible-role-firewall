@@ -6,7 +6,6 @@ firewall
 Configures the firewall for your system.
 Different distributions use different firewall implementations. This Ansible role aims to be very simply to use. It's been designed to work with:
 
-
 |distribution|firewall       |
 |------------|---------------|
 |Alpine      |iptables       |
@@ -42,6 +41,7 @@ Requirements
 - A system installed with required packages to run Ansible. Hint: [bootstrap](https://galaxy.ansible.com/robertdebock/bootstrap).
 - Access to a repository containing packages, likely on the internet.
 - A recent version of Ansible. (Tests run on the last 3 release of Ansible.)
+- For CentOS-7, set the variable `ansible_python_interpreter` to `/usr/bin/python3`. For example: `ansible-playbook --extra-vars "ansible_python_interpreter=usr/bin/python3" playbook.yml`
 
 Role Variables
 --------------

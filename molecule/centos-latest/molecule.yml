@@ -12,6 +12,8 @@ platforms:
     image: centos:latest
 provisioner:
   name: ansible
+  extra_vars:
+    ansible_python_interpreter: /usr/bin/python3
   lint:
     name: ansible-lint
 scenario:
