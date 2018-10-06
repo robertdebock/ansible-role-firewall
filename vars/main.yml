@@ -48,5 +48,5 @@ firewall_iptables_rulefile:
   CentOS-6: /etc/sysconfig/iptables
 
 ansible_python_interpreter:
-  default: []
+  default: /usr/bin/python
   CentOS-7: /usr/bin/python3
