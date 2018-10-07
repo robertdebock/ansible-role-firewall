@@ -2,16 +2,16 @@
 # tasks file for firewall
 - name: remove conflicting software
   package:
-    name: "{{ firewall_packages.conflicting[ansible_distribution]
-          | default[firewall_packages.conflicting['default']) }}"
+    name: "{{ firewall_packages['conflicting'][ansible_distribution]
+          | default[firewall_packages['conflicting']['default']) }}"
     state: absent
   when:
     - firewall_packages.conflicting is defined
 
 - name: install required software
   package:
-    name: "{{ firewall_packages.required[ansible_distribution]
-          | default[firewall_packages.required['default']) }}"
+    name: "{{ firewall_packages['required'][ansible_distribution]
+          | default[firewall_packages['required']['default']) }}"
     state: "{{ firewall_package_state }}"
   when:
     - firewall_packages.required is defined
