@@ -11,7 +11,8 @@
 - name: install required software
   package:
     name: "{{ firewall_packages['required'][ansible_distribution]
-          | default(firewall_packages['required']['default']) }}"
+          | default(firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version]
+          | default(firewall_packages['required']['default'])) }}"
     state: "{{ firewall_package_state }}"
   when:
     - firewall_packages.required is defined

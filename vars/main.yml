@@ -9,7 +9,8 @@ firewall_packages:
     CentOS-6:
       - iptables
     CentOS-7:
-      - firewalld
+      - iptables
+      - iptables-services
     Fedora:
       - firewalld
     openSUSE Leap:
@@ -22,10 +23,8 @@ firewall_packages:
     Alpine:
       - firewalld
       - ufw
-    CentOS-6:
+    CentOS:
       - firewalld
-      - ufw
-    CentOS-7:
       - ufw
     Fedora:
       - ufw
