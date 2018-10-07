@@ -3,7 +3,7 @@
 - name: remove conflicting software
   package:
     name: "{{ firewall_packages['conflicting'][ansible_distribution]
-          | default[firewall_packages['conflicting']['default']) }}"
+          | default(firewall_packages['conflicting']['default']) }}"
     state: absent
   when:
     - firewall_packages.conflicting is defined
@@ -11,7 +11,7 @@
 - name: install required software
   package:
     name: "{{ firewall_packages['required'][ansible_distribution]
-          | default[firewall_packages['required']['default']) }}"
+          | default(firewall_packages['required']['default']) }}"
     state: "{{ firewall_package_state }}"
   when:
     - firewall_packages.required is defined
@@ -65,20 +65,20 @@
     state: enabled
   when:
     - firewall_service[ansible_distribution]
-      | default[firewall_service['default'] ) == "ufw"
+      | default(firewall_service['default']) == "ufw"
     - ansible_virtualization_type != "docker"
 
 - name: configure iptables
   template:
     src: iptables.j2
     dest: "{{ firewall_iptables_rulefile[ansible_distribution]
-          | default[firewall_iptables_rulefile['default'] }}"
+          | default(firewall_iptables_rulefile['default'] }}"
     validate: "iptables-restore --test %s"
   when:
     - ansible_virtualization_type != "docker"
     - firewall_services is defined
     - firewall_service[ansible_distribution]
-      | default[firewall_service['default'] ) == "iptables"
+      | default(firewall_service['default']) == "iptables"
   loop_control:
     label: "{{ item.name }}"
   notify:
@@ -87,7 +87,7 @@
 - name: start and enable software
   service:
     name: "{{ firewall_service[ansible_distribution]
-          | default[firewall_service['default'] }}"
+          | default(firewall_service['default']) }}"
     state: started
     enabled: true
   when:
