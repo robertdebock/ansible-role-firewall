@@ -1,5 +1,9 @@
 ---
 # vars file for firewall
+firewall_ansible_python_interpreter:
+  default: /usr/bin/python
+  Fedora: /usr/bin/python3
+
 firewall_packages:
   required:
     default:
@@ -14,6 +18,7 @@ firewall_packages:
       - iptables-services
     Fedora:
       - firewalld
+      - python3-firewall
     openSUSE Leap:
       - firewalld
     openSUSE Tumbleweed:

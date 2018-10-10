@@ -1,5 +1,11 @@
 ---
 # tasks file for firewall
+- name: use configured python version
+  set_fact:
+    ansible_python_interpreter: "{{ firewall_ansible_python_interpreter[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
+                                |default(firewall_ansible_python_interpreter[ansible_distribution]
+                                |default(firewall_ansible_python_interpreter['default'])) }}"
+
 - name: remove conflicting software
   package:
     name: "{{ firewall_packages['conflicting'][ansible_distribution]
@@ -80,8 +86,9 @@
 - name: configure iptables
   template:
     src: iptables.j2
-    dest: "{{ firewall_iptables_rulefile[ansible_distribution]
-          | default(firewall_iptables_rulefile['default'] }}"
+    dest: "{{ firewall_iptables_rulefile[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
+          | default(firewall_iptables_rulefile[ansible_distribution]
+          | default(firewall_iptables_rulefile['default'])) }}"
     validate: "iptables-restore --test %s"
   when:
     - ansible_virtualization_type != "docker"
