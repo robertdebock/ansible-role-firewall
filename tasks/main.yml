@@ -2,27 +2,21 @@
 # tasks file for firewall
 - name: use configured python version
   set_fact:
-    ansible_python_interpreter: "{{ firewall_ansible_python_interpreter[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-                                |default(firewall_ansible_python_interpreter[ansible_distribution]
-                                |default(firewall_ansible_python_interpreter['default'])) }}"
+    ansible_python_interpreter: "{{ firewall_ansible_python_interpreter }}"
 
 - name: remove conflicting software
   package:
-    name: "{{ firewall_packages['conflicting'][ansible_distribution]
-          | default(firewall_packages['conflicting'][ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-          | default(firewall_packages['conflicting']['default'])) }}"
+    name: "{{ firewall_packages_conflicting }}"
     state: absent
   when:
-    - firewall_packages.conflicting is defined
+    - firewall_packages_conflicting is defined
 
 - name: install required software
   package:
-    name: "{{ firewall_packages['required'][ansible_distribution]
-          | default(firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-          | default(firewall_packages['required']['default'])) }}"
+    name: "{{ firewall_packages_required }}"
     state: "{{ firewall_package_state }}"
   when:
-    - firewall_packages.required is defined
+    - firewall_packages_required is defined
 
 - name: open ports (ufw)
   ufw:
@@ -34,9 +28,7 @@
   when:
     - firewall_services is defined
     - ansible_virtualization_type != "docker"
-    - firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-      | default (firewall_service[ansible_distribution]
-      | default (firewall_service['default'])) == "ufw"
+    - firewall_service == "ufw"
   loop_control:
     label: "{{ item.name }}"
 
@@ -49,9 +41,7 @@
     - "{{ firewall_services }}"
   when:
     - firewall_services is defined
-    - firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-      | default (firewall_service[ansible_distribution]
-      | default (firewall_service['default'])) == "firewalld"
+    - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
     - item.name is number
   loop_control:
@@ -66,9 +56,7 @@
     - "{{ firewall_services }}"
   when:
     - firewall_services is defined
-    - firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-      | default (firewall_service[ansible_distribution]
-      | default (firewall_service['default'])) == "firewalld"
+    - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
     - item.name is not number
   loop_control:
@@ -78,24 +66,18 @@
   ufw:
     state: enabled
   when:
-    - firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-      | default (firewall_service[ansible_distribution]
-      | default (firewall_service['default'])) == "ufw"
+    - firewall_service == "ufw"
     - ansible_virtualization_type != "docker"
 
 - name: configure iptables
   template:
     src: iptables.j2
-    dest: "{{ firewall_iptables_rulefile[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-          | default(firewall_iptables_rulefile[ansible_distribution]
-          | default(firewall_iptables_rulefile['default'])) }}"
+    dest: "{{ firewall_iptables_rulefile }}"
     validate: "iptables-restore --test %s"
   when:
     - ansible_virtualization_type != "docker"
     - firewall_services is defined
-    - firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-      | default (firewall_service[ansible_distribution]
-      | default (firewall_service['default'])) == "iptables"
+    - firewall_service == "iptables"
   loop_control:
     label: "{{ item.name }}"
   notify:
@@ -103,9 +85,7 @@
 
 - name: start and enable firewall service
   service:
-    name: "{{ firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version]
-          | default(firewall_service[ansible_distribution]
-          | default(firewall_service['default'])) }}"
+    name: "{{ firewall_service }}"
     state: started
     enabled: true
   when:
