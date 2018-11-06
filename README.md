@@ -3,21 +3,7 @@ firewall
 
 [![Build Status](https://travis-ci.org/robertdebock/ansible-role-firewall.svg?branch=master)](https://travis-ci.org/robertdebock/ansible-role-firewall)
 
-Configures the firewall for your system.
-
-Different distributions use different firewall implementations. This Ansible role aims to be very simply to use. It's been designed to work with:
-
-|distribution|firewall       |
-|------------|---------------|
-|Alpine      |iptables       |
-|Archlinux   |not implemented|
-|CentOS 6    |iptables       |
-|CentOS 7    |firewalld      |
-|Debian      |uwf            |
-|Fedora      |frewalld       |
-|OpenSUSE    |firealld       |
-|Ubuntu      |uwf            |
-
+The purpose of this role is to install and configure a firewall on your system.
 
 Example Playbook
 ----------------
