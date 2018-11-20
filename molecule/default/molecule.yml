@@ -38,6 +38,8 @@ platforms:
     image: ubuntu:artful
   - name: firewall-ubuntu-devel
     image: ubuntu:devel
+  - name: firewall-ubuntu-latest
+    image: ubuntu:latest
 provisioner:
   name: ansible
   lint:
