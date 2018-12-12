@@ -38,7 +38,7 @@
 - name: open ports (firewalld-port)
   firewalld:
     port: "{{ item.name }}/{{ item.protocol | default('tcp') }}"
-    permanent: true
+    permanent: yes
     state: enabled
   with_items:
     - "{{ firewall_services }}"
@@ -53,7 +53,7 @@
 - name: open ports (firewalld-service)
   firewalld:
     service: "{{ item.name }}"
-    permanent: true
+    permanent: yes
     state: enabled
   with_items:
     - "{{ firewall_services }}"
@@ -90,7 +90,7 @@
   service:
     name: "{{ firewall_service }}"
     state: started
-    enabled: true
+    enabled: yes
   when:
     - ansible_virtualization_type != "docker" or firewall_ignore_docker
     - firewall_service is defined
