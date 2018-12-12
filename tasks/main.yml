@@ -49,6 +49,8 @@
     - item.name is number
   loop_control:
     label: "{{ item.name }}"
+  notify:
+    - reload firewalld
 
 - name: open ports (firewalld-service)
   firewalld:
@@ -64,6 +66,8 @@
     - item.name is not number
   loop_control:
     label: "{{ item.name }}"
+  notify:
+    - reload firewalld
 
 - name: enable ufw
   ufw:
