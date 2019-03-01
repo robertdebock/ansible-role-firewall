@@ -22,8 +22,6 @@ _firewall_packages:
       - ufw
     openSUSE Leap:
       - ufw
-    openSUSE Tumbleweed:
-      - ufw
   required:
     default:
       - ufw
@@ -40,8 +38,6 @@ _firewall_packages:
       - python3-firewall
     openSUSE Leap:
       - firewalld
-    openSUSE Tumbleweed:
-      - firewalld
 
 firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['conflicting'][ansible_distribution] | default(_firewall_packages['conflicting']['default'])) }}"
 
@@ -54,7 +50,6 @@ _firewall_service:
   CentOS-7: firewalld
   Fedora: firewalld
   openSUSE Leap: firewalld
-  openSUSE Tumbleweed: firewalld
 
 firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default (_firewall_service[ansible_distribution] | default (_firewall_service['default'])) }}"
 
