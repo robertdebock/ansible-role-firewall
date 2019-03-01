@@ -32,8 +32,6 @@ platforms:
     image: fedora:rawhide
   - name: firewall-opensuse-leap
     image: opensuse:leap
-  - name: firewall-opensuse-tumbleweed
-    image: opensuse:tumbleweed
   - name: firewall-ubuntu-latest
     image: ubuntu:latest
   - name: firewall-ubuntu-rolling
