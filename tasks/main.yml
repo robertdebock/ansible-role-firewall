@@ -1,8 +1,8 @@
 ---
 # tasks file for firewall
-- name: use configured python version
-  set_fact:
-    ansible_python_interpreter: "{{ firewall_ansible_python_interpreter }}"
+# - name: use configured python version
+#   set_fact:
+#     ansible_python_interpreter: "{{ firewall_ansible_python_interpreter }}"
 
 - name: remove conflicting software
   package:
