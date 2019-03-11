@@ -14,7 +14,7 @@
 - name: install required software
   package:
     name: "{{ firewall_packages_required }}"
-    state: "{{ firewall_package_state }}"
+    state: present
   when:
     - firewall_packages_required is defined
   register: firewall_install_required_software

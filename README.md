@@ -41,9 +41,6 @@ firewall_services:
 #   - name: https
 #   - name: 5353
 #     proto: udp
-
-# To update all packages installed by this roles, set `firewall_package_state` to `latest`.
-firewall_package_state: present
 ```
 
 Requirements
