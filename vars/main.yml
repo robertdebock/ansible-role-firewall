@@ -1,8 +1,5 @@
 ---
 # vars file for firewall
-# _firewall_ansible_python_interpreter:
-#   default: /usr/bin/python
-#   Fedora: /usr/bin/python3
 
 # firewall_ansible_python_interpreter: "{{ _firewall_ansible_python_interpreter[ansible_distribution] |default(_firewall_ansible_python_interpreter['default']) }}"
 
