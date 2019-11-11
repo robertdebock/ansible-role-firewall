@@ -35,25 +35,6 @@ The machine you are running this on, may need to be prepared.
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
 
-Role Variables
---------------
-
-These variables are set in `defaults/main.yml`:
-```yaml
----
-# defaults file for firewall
-
-# A list of service to allow traffic to.
-firewall_services:
-  - name: ssh
-
-# A bit more difficult example:
-# firewall_services:
-#   - name: ssh
-#   - name: https
-#   - name: 5353
-#     proto: udp
-```
 
 Requirements
 ------------
@@ -96,11 +77,9 @@ This role has been tested on these [container images](https://hub.docker.com/):
 
 This role has been tested on these Ansible versions:
 
-- ansible~=2.8
-- ansible~=2.9
+- ansible>=2.8, <2.9
+- ansible>=2.9
 - git+https://github.com/ansible/ansible.git@devel
-
-The indicator '\~=' means [compatible with](https://www.python.org/dev/peps/pep-0440/#compatible-release). For example 'ansible\~=2.8' would pick the latest ansible-2.8, for example ansible-2.8.6.
 
 
 
