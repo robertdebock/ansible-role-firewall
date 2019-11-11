@@ -10,11 +10,9 @@ _firewall_packages:
     Alpine:
       - firewalld
       - ufw
-    CentOS-6:
-      - firewalld
-      - ufw
     CentOS-7:
       - ufw
+    CentOS-8: []
     Fedora:
       - ufw
     openSUSE Leap:
@@ -24,12 +22,12 @@ _firewall_packages:
       - ufw
     Alpine:
       - iptables
-    CentOS-6:
-      - iptables
     CentOS-7:
       - firewalld
       - iptables
       - iptables-services
+    CentOS-8:
+      - firewalld
     Fedora:
       - firewalld
       - python3-firewall
@@ -43,8 +41,8 @@ firewall_packages_required: "{{ _firewall_packages['required'][ansible_distribut
 _firewall_service:
   default: ufw
   Alpine: iptables
-  CentOS-6: iptables
   CentOS-7: firewalld
+  CentOS-8: firewalld
   Fedora: firewalld
   openSUSE Leap: firewalld
 
@@ -52,6 +50,5 @@ firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_dis
 
 _firewall_iptables_rulefile:
   Alpine: /etc/iptables/rules-save
-  CentOS-6: /etc/sysconfig/iptables
 
 firewall_iptables_rulefile: "{{ _firewall_iptables_rulefile[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_iptables_rulefile[ansible_distribution] | default(_firewall_iptables_rulefile['default'])) }}"
