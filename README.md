@@ -35,6 +35,25 @@ The machine you are running this on, may need to be prepared.
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
 
+Role Variables
+--------------
+
+These variables are set in `defaults/main.yml`:
+```yaml
+---
+# defaults file for firewall
+
+# A list of service to allow traffic to.
+firewall_services:
+  - name: ssh
+
+# A bit more difficult example:
+# firewall_services:
+#   - name: ssh
+#   - name: https
+#   - name: 5353
+#     proto: udp
+```
 
 Requirements
 ------------
