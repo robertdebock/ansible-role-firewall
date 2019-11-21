@@ -33,7 +33,6 @@ galaxy_info:
     - centos
     - firewall
     - firewalld
-    - opensuse
     - rhel
     - server
     - system
