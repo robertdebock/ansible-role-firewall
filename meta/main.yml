@@ -31,7 +31,6 @@ galaxy_info:
 
   galaxy_tags:
     - centos
-    - debian
     - el
     - fedora
     - firewall
