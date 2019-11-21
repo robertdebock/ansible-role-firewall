@@ -30,7 +30,6 @@ galaxy_info:
         - bionic
 
   galaxy_tags:
-    - alpine
     - centos
     - debian
     - el
