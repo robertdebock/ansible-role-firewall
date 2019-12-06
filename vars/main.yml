@@ -13,6 +13,9 @@ _firewall_packages:
     CentOS-7:
       - ufw
     CentOS-8: []
+    RedHat-7:
+      - ufw
+    RedHat-8: []
     Fedora:
       - ufw
     openSUSE Leap:
@@ -27,6 +30,12 @@ _firewall_packages:
       - iptables
       - iptables-services
     CentOS-8:
+      - firewalld
+    RedHat-7:
+      - firewalld
+      - iptables
+      - iptables-services
+    RedHat-8:
       - firewalld
     Fedora:
       - firewalld
@@ -43,6 +52,8 @@ _firewall_service:
   Alpine: iptables
   CentOS-7: firewalld
   CentOS-8: firewalld
+  RedHat-7: firewalld
+  RedHat-8: firewalld
   Fedora: firewalld
   openSUSE Leap: firewalld
 

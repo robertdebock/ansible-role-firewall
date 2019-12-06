@@ -90,6 +90,8 @@ This role has been tested on these [container images](https://hub.docker.com/):
 |debian|latest|no|
 |centos|7|no|
 |centos|latest|no|
+|redhat|7|no|
+|redhat|latest|no|
 |fedora|latest|no|
 |fedora|rawhide|yes|
 |opensuse|latest|no|
