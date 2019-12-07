@@ -30,11 +30,10 @@ galaxy_info:
         - bionic
 
   galaxy_tags:
-    - centos
     - firewall
     - firewalld
-    - rhel
     - server
     - system
+    - centos
 
 dependencies: []

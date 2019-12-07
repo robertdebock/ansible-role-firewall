@@ -90,8 +90,6 @@ This role has been tested on these [container images](https://hub.docker.com/):
 |debian|latest|no|
 |centos|7|no|
 |centos|latest|no|
-|redhat|7|no|
-|redhat|latest|no|
 |fedora|latest|no|
 |fedora|rawhide|yes|
 |opensuse|latest|no|
@@ -103,6 +101,14 @@ This role has been tested on these Ansible versions:
 - ansible>=2.9
 - git+https://github.com/ansible/ansible.git@devel
 
+Exceptions
+----------
+
+Some variarations of the build matrix do not work. These are the variations and reasons why the build won't work:
+
+| variation                 | reason                 |
+|---------------------------|------------------------|
+| redhat | Can't test on RHEL: No package matching 'firewalld' found available, installed or updated |
 
 
 Testing
