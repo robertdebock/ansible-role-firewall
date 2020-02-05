@@ -22,8 +22,7 @@
     rule: "{{ item.rule | default('allow') }}"
     port: "{{ item.name }}"
     proto: "{{ item.protocol | default('tcp') }}"
-  with_items:
-    - "{{ firewall_services }}"
+  loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
     - ansible_virtualization_type != "docker"
@@ -36,8 +35,7 @@
     port: "{{ item.name }}/{{ item.protocol | default('tcp') }}"
     permanent: yes
     state: enabled
-  with_items:
-    - "{{ firewall_services }}"
+  loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
     - firewall_service == "firewalld"
@@ -53,8 +51,7 @@
     service: "{{ item.name }}"
     permanent: yes
     state: enabled
-  with_items:
-    - "{{ firewall_services }}"
+  loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
     - firewall_service == "firewalld"
