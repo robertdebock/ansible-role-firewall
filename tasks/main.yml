@@ -26,6 +26,7 @@
   when:
     - firewall_services is defined
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
     - firewall_service == "ufw"
   loop_control:
     label: "{{ item.name }}"
@@ -40,6 +41,7 @@
     - firewall_services is defined
     - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
     - item.name is number
   loop_control:
     label: "{{ item.name }}"
@@ -56,6 +58,7 @@
     - firewall_services is defined
     - firewall_service == "firewalld"
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
     - item.name is not number
   loop_control:
     label: "{{ item.name }}"
@@ -68,6 +71,7 @@
   when:
     - firewall_service == "ufw"
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
 
 - name: configure iptables
   template:
@@ -76,6 +80,7 @@
     validate: "iptables-restore --test %s"
   when:
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
     - firewall_services is defined
     - firewall_service == "iptables"
   loop_control:
@@ -90,4 +95,5 @@
     enabled: yes
   when:
     - ansible_virtualization_type != "docker"
+    - ansible_virtualization_type != "container"
     - firewall_service is defined
