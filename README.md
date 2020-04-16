@@ -63,7 +63,7 @@ firewall_services:
 #   - name: ssh
 #   - name: https
 #   - name: 5353
-#     proto: udp
+#     protocol: udp
 ```
 
 ## Requirements
