@@ -5,8 +5,7 @@
     name: "{{ firewall_service }}"
     state: reloaded
   when:
-    - ansible_virtualization_type != "docker"
-    - ansible_virtualization_type != "container"
+    - ansible_connection != "docker"
 
 - name: reload firewalld
   command: firewall-cmd --reload
