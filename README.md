@@ -53,6 +53,8 @@ These variables are set in `defaults/main.yml`:
 ```yaml
 ---
 # defaults file for firewall
+# If you don't specify a protocol in `firewall_services`, fall back to this.
+firewall_default_protocol: tcp
 
 # A list of service to allow traffic to.
 firewall_services:
@@ -64,6 +66,8 @@ firewall_services:
 #   - name: https
 #   - name: 5353
 #     protocol: udp
+#   - name: 1234
+#     protocol: tcp
 ```
 
 ## [Requirements](#requirements)

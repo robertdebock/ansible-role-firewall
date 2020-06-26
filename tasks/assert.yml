@@ -1,0 +1,37 @@
+---
+- name: test if firewall_default_protocol is set correctly
+  assert:
+    that:
+      - firewall_default_protocol is defined
+      - firewall_default_protocol | length > 0
+      - firewall_default_protocol in ["tcp", "udp"]
+
+- name: test if firewall_services is set correctly
+  assert:
+    that:
+      - firewall_services | length > 0
+      - firewall_services is iterable
+  when:
+    - firewall_services is defined
+
+- name: test if non-numeric item in firewall_services is set correctly
+  assert:
+    that:
+      - item.name is defined
+      - item.name | length > 0
+  loop: "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - item.name | int != 0
+
+- name: test if numeric item in firewall_services is set correctly
+  assert:
+    that:
+      - item.name is defined
+      - item.name | int
+      - item.name | int > 0
+      - item.name | int < 65536
+  loop: "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - item.name | int

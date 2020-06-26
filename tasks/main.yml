@@ -1,5 +1,8 @@
 ---
 # tasks file for firewall
+- name: include assert.yml
+  include_tasks: assert.yml
+
 - name: remove conflicting software
   package:
     name: "{{ firewall_packages_conflicting }}"
@@ -21,7 +24,7 @@
   ufw:
     rule: "{{ item.rule | default('allow') }}"
     port: "{{ item.name }}"
-    proto: "{{ item.protocol | default('tcp') }}"
+    proto: "{{ item.protocol | default(firewall_default_protocol) }}"
   loop: "{{ firewall_services }}"
   when:
     - ansible_connection != "docker"
@@ -32,7 +35,7 @@
 
 - name: open ports (firewalld-port)
   firewalld:
-    port: "{{ item.name }}/{{ item.protocol | default('tcp') }}"
+    port: "{{ item.name }}/{{ item.protocol | default(firewall_default_protocol) }}"
     permanent: yes
     state: enabled
   loop: "{{ firewall_services }}"
