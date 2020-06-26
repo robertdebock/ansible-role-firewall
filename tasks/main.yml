@@ -22,7 +22,7 @@
 
 - name: open ports (ufw)
   ufw:
-    rule: "{{ item.rule | default('allow') }}"
+    rule: "{{ item.rule | default(firewall_default_rule) }}"
     port: "{{ item.name }}"
     proto: "{{ item.protocol | default(firewall_default_protocol) }}"
   loop: "{{ firewall_services }}"

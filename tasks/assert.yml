@@ -6,6 +6,13 @@
       - firewall_default_protocol | length > 0
       - firewall_default_protocol in ["tcp", "udp"]
 
+- name: test if firewall_default_rule is set correctly
+  assert:
+    that:
+      - firewall_default_rule is defined
+      - firewall_default_rule | length > 0
+      - firewall_default_rule in ["allow", "deny"]
+
 - name: test if firewall_services is set correctly
   assert:
     that:
