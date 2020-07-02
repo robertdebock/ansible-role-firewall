@@ -26,6 +26,7 @@
     that:
       - item.name is defined
       - item.name | length > 0
+    quiet: yes
   loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
@@ -38,6 +39,7 @@
       - item.name | int
       - item.name | int > 0
       - item.name | int < 65536
+    quiet: yes
   loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
