@@ -56,6 +56,9 @@ These variables are set in `defaults/main.yml`:
 # If you don't specify a protocol in `firewall_services`, fall back to this.
 firewall_default_protocol: tcp
 
+# If you don't specify a rule in `firewall_services`, fall back to this.
+firewall_default_rule: allow
+
 # A list of service to allow traffic to.
 firewall_services:
   - name: ssh
