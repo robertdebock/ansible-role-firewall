@@ -30,7 +30,7 @@
   loop: "{{ firewall_services }}"
   when:
     - firewall_services is defined
-    - item.name | int != 0
+    - item.name | type_debug != "int"
 
 - name: test if numeric item in firewall_services is set correctly
   assert:
