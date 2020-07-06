@@ -53,6 +53,7 @@ These variables are set in `defaults/main.yml`:
 ```yaml
 ---
 # defaults file for firewall
+
 # If you don't specify a protocol in `firewall_services`, fall back to this.
 firewall_default_protocol: tcp
 
