@@ -19,3 +19,5 @@ firewall_services:
 #     protocol: udp
 #   - name: 1234
 #     protocol: tcp
+#   - name: 1337
+#     state: absent

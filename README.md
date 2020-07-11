@@ -40,9 +40,35 @@ For verification `molecule/resources/verify.yml` run after the role has been app
   become: yes
   gather_facts: yes
 
-  tasks:
-    - name: check if connection still works
-      ping:
+  tasks: 
+    - name: create a firewall rule to open port 1337
+      include_role:
+        name: robertdebock.firewall
+      vars:
+        firewall_services:
+          - name: 1337
+
+    - name: remove a firewall rule to close port 1337
+      include_role:
+        name: robertdebock.firewall
+      vars:
+        firewall_services:
+          - name: 1337
+            state: absent
+
+    - name: remove a firewall rule to close port 1337
+      include_role:
+        name: robertdebock.firewall
+      vars:
+        firewall_services:
+          - name: 1337
+            state: absent
+      register: firewall_remove_a_firewall_rule_to_close_port_1337
+
+    - name: check that the last tasks was not changed
+      assert:
+        that:
+          - firewall_remove_a_firewall_rule_to_close_port_1337 is not changed
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -72,6 +98,8 @@ firewall_services:
 #     protocol: udp
 #   - name: 1234
 #     protocol: tcp
+#   - name: 1337
+#     state: absent
 ```
 
 ## [Requirements](#requirements)

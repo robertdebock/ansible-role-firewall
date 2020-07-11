@@ -44,3 +44,14 @@
   when:
     - firewall_services is defined
     - item.name | int
+
+- name: test if item with state in firewall_services is set correctly
+  assert:
+    that:
+      - item.state | length > 0
+      - item.state in ["absent", "present"]
+    quiet: yes
+  loop: "{{ firewall_services }}"
+  when:
+    - firewall_services is defined
+    - item.state is defined
