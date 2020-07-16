@@ -16,9 +16,6 @@
     state: present
   when:
     - firewall_packages_required is defined
-  register: firewall_install_required_software
-  until: firewall_install_required_software is succeeded
-  retries: 3
 
 - name: open ports (ufw)
   ufw:
