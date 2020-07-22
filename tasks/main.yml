@@ -41,6 +41,7 @@
     - ansible_connection != "docker"
     - firewall_services is defined
     - firewall_service == "ufw"
+    - item.state is defined
     - item.state == "absent"
   loop_control:
     label: "{{ item.name }}"
@@ -72,6 +73,7 @@
     - firewall_services is defined
     - firewall_service == "firewalld"
     - item.name is number
+    - item.state is defined
     - item.state == "absent"
   loop_control:
     label: "{{ item.name }}"
