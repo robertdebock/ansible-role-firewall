@@ -107,6 +107,7 @@
     - firewall_services is defined
     - firewall_service == "firewalld"
     - item.name is not number
+    - item.state is defined
     - item.state == "absent"
   loop_control:
     label: "{{ item.name }}"
