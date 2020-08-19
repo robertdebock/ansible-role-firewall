@@ -5,6 +5,7 @@
       - firewall_default_protocol is defined
       - firewall_default_protocol | length > 0
       - firewall_default_protocol in ["tcp", "udp"]
+    quiet: yes
 
 - name: test if firewall_default_rule is set correctly
   assert:
@@ -12,12 +13,14 @@
       - firewall_default_rule is defined
       - firewall_default_rule | length > 0
       - firewall_default_rule in ["allow", "deny"]
+    quiet: yes
 
 - name: test if firewall_services is set correctly
   assert:
     that:
       - firewall_services | length > 0
       - firewall_services is iterable
+    quiet: yes
   when:
     - firewall_services is defined
 
