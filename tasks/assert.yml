@@ -31,6 +31,8 @@
       - item.name | length > 0
     quiet: yes
   loop: "{{ firewall_services }}"
+  loop_control:
+    label: "{{ item.name }}"
   when:
     - firewall_services is defined
     - item.name | type_debug != "int"
@@ -44,6 +46,8 @@
       - item.name | int < 65536
     quiet: yes
   loop: "{{ firewall_services }}"
+  loop_control:
+    label: "{{ item.name }}"
   when:
     - firewall_services is defined
     - item.name | int
@@ -55,6 +59,8 @@
       - item.state in ["absent", "present"]
     quiet: yes
   loop: "{{ firewall_services }}"
+  loop_control:
+    label: "{{ item.state | default('unset') }}"
   when:
     - firewall_services is defined
     - item.state is defined
