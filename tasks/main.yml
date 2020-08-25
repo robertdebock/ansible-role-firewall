@@ -126,6 +126,7 @@
     src: iptables.j2
     dest: "{{ firewall_iptables_rulefile }}"
     validate: "iptables-restore --test %s"
+    mode: "0640"
   when:
     - ansible_connection != "docker"
     - firewall_services is defined
