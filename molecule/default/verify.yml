@@ -4,7 +4,7 @@
   become: yes
   gather_facts: yes
 
-  tasks: 
+  tasks:
     - name: create a firewall rule to open port 1337
       include_role:
         name: ansible-role-firewall
