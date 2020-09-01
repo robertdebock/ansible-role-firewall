@@ -40,7 +40,7 @@ For verification `molecule/resources/verify.yml` run after the role has been app
   become: yes
   gather_facts: yes
 
-  tasks: 
+  tasks:
     - name: create a firewall rule to open port 1337
       include_role:
         name: robertdebock.firewall
