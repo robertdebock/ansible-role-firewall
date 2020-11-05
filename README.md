@@ -20,7 +20,7 @@ This example is taken from `molecule/resources/converge.yml` and is tested on ea
     - role: robertdebock.firewall
 ```
 
-The machine may need to be prepared using `molecule/resources/prepare.yml`:
+The machine needs to be prepared in CI this is done using `molecule/resources/prepare.yml`:
 ```yaml
 ---
 - name: Prepare
@@ -30,45 +30,6 @@ The machine may need to be prepared using `molecule/resources/prepare.yml`:
 
   roles:
     - role: robertdebock.bootstrap
-```
-
-For verification `molecule/resources/verify.yml` runs after the role has been applied.
-```yaml
----
-- name: Verify
-  hosts: all
-  become: yes
-  gather_facts: yes
-
-  tasks:
-    - name: create a firewall rule to open port 1337
-      include_role:
-        name: robertdebock.firewall
-      vars:
-        firewall_services:
-          - name: 1337
-
-    - name: remove a firewall rule to close port 1337
-      include_role:
-        name: robertdebock.firewall
-      vars:
-        firewall_services:
-          - name: 1337
-            state: absent
-
-    - name: remove a firewall rule to close port 1337
-      include_role:
-        name: robertdebock.firewall
-      vars:
-        firewall_services:
-          - name: 1337
-            state: absent
-      register: firewall_remove_a_firewall_rule_to_close_port_1337
-
-    - name: check that the last tasks was not changed
-      assert:
-        that:
-          - firewall_remove_a_firewall_rule_to_close_port_1337 is not changed
 ```
 
 Also see a [full explanation and example](https://robertdebock.nl/how-to-use-these-roles.html) on how to use these roles.
@@ -107,13 +68,11 @@ firewall_services:
 - Access to a repository containing packages, likely on the internet.
 - A recent version of Ansible. (Tests run on the current, previous and next release of Ansible.)
 
-The following roles can be installed to ensure all requirements are met, using `ansible-galaxy install -r requirements.yml`:
+## [Status of requirements](#status-of-requirements)
 
-```yaml
----
-- robertdebock.bootstrap
-
-```
+| Requirement | Travis | GitHub |
+|-------------|--------|--------|
+| [robertdebock.bootstrap](https://galaxy.ansible.com/robertdebock/bootstrap) | [![Build Status Travis](https://travis-ci.com/robertdebock/ansible-role-bootstrap.svg?branch=master)](https://travis-ci.com/robertdebock/ansible-role-bootstrap) | [![Build Status GitHub](https://github.com/robertdebock/ansible-role-bootstrap/workflows/Ansible%20Molecule/badge.svg)](https://github.com/robertdebock/ansible-role-bootstrap/actions) |
 
 ## [Context](#context)
 
