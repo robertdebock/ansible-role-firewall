@@ -4,7 +4,7 @@
     that:
       - firewall_default_protocol is defined
       - firewall_default_protocol | length > 0
-      - firewall_default_protocol in ["tcp", "udp"]
+      - firewall_default_protocol in [ "tcp", "udp" ]
     quiet: yes
 
 - name: test if firewall_default_rule is set correctly
@@ -12,7 +12,7 @@
     that:
       - firewall_default_rule is defined
       - firewall_default_rule | length > 0
-      - firewall_default_rule in ["allow", "deny"]
+      - firewall_default_rule in [ "allow", "deny" ]
     quiet: yes
 
 - name: test if firewall_services is set correctly
@@ -56,7 +56,7 @@
   assert:
     that:
       - item.state | length > 0
-      - item.state in ["absent", "present"]
+      - item.state in [ "absent", "present" ]
     quiet: yes
   loop: "{{ firewall_services }}"
   loop_control:
