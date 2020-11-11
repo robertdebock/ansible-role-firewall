@@ -41,7 +41,7 @@
   assert:
     that:
       - item.name is defined
-      - item.name | int
+      - item.name is number
       - item.name | int > 0
       - item.name | int < 65536
     quiet: yes
@@ -50,7 +50,7 @@
     label: "{{ item.name }}"
   when:
     - firewall_services is defined
-    - item.name | int
+    - item.name is number
 
 - name: test if item with state in firewall_services is set correctly
   assert:
