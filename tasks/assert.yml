@@ -3,7 +3,6 @@
   assert:
     that:
       - firewall_default_protocol is defined
-      - firewall_default_protocol | length > 0
       - firewall_default_protocol in [ "tcp", "udp" ]
     quiet: yes
 
@@ -11,14 +10,12 @@
   assert:
     that:
       - firewall_default_rule is defined
-      - firewall_default_rule | length > 0
       - firewall_default_rule in [ "allow", "deny" ]
     quiet: yes
 
 - name: test if firewall_services is set correctly
   assert:
     that:
-      - firewall_services | length > 0
       - firewall_services is iterable
     quiet: yes
   when:
@@ -28,7 +25,6 @@
   assert:
     that:
       - item.name is defined
-      - item.name | length > 0
     quiet: yes
   loop: "{{ firewall_services }}"
   loop_control:
@@ -55,7 +51,6 @@
 - name: test if item with state in firewall_services is set correctly
   assert:
     that:
-      - item.state | length > 0
       - item.state in [ "absent", "present" ]
     quiet: yes
   loop: "{{ firewall_services }}"
