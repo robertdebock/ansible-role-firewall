@@ -35,7 +35,7 @@
     label: "{{ item.name }}"
   when:
     - firewall_services is defined
-    - item.name | type_debug != "int"
+    - item.name is not number
 
 - name: test if numeric item in firewall_services is set correctly
   assert:
