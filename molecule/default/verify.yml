@@ -29,4 +29,4 @@
             state: absent
       register: firewall_remove_a_firewall_rule_to_close_port_1337
       failed_when:
-        - firewall_remove_a_firewall_rule_to_close_port_1337 is changed
+        - firewall_remove_a_firewall_rule_to_close_port_1337 is not changed
