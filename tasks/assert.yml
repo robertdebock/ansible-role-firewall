@@ -4,6 +4,7 @@
   assert:
     that:
       - firewall_default_protocol is defined
+      - firewall_default_protocol is string
       - firewall_default_protocol in [ "tcp", "udp" ]
     quiet: yes
 
@@ -11,6 +12,7 @@
   assert:
     that:
       - firewall_default_rule is defined
+      - firewall_default_rule is string
       - firewall_default_rule in [ "allow", "deny" ]
     quiet: yes
 
@@ -26,6 +28,7 @@
   assert:
     that:
       - item.name is defined
+      - item.name is string
     quiet: yes
   loop: "{{ firewall_services }}"
   loop_control:
