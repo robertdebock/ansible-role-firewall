@@ -55,6 +55,7 @@
 - name: test if item with state in firewall_services is set correctly
   assert:
     that:
+      - item.state is string
       - item.state in [ "absent", "present" ]
     quiet: yes
   loop: "{{ firewall_services }}"
