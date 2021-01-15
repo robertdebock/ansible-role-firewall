@@ -49,7 +49,7 @@
     label: "{{ item.name }}"
 
 - name: open ports (firewalld-port)
-  firewalld:
+  ansible.posix.firewalld:
     port: "{{ item.name }}/{{ item.protocol | default(firewall_default_protocol) }}"
     permanent: yes
     state: enabled
@@ -65,7 +65,7 @@
     - reload firewalld
 
 - name: close ports (firewalld-port)
-  firewalld:
+  ansible.posix.firewalld:
     port: "{{ item.name }}/{{ item.protocol | default(firewall_default_protocol) }}"
     permanent: yes
     state: disabled
@@ -83,7 +83,7 @@
     - reload firewalld
 
 - name: open ports (firewalld-service)
-  firewalld:
+  ansible.posix.firewalld:
     service: "{{ item.name }}"
     permanent: yes
     state: enabled
@@ -99,7 +99,7 @@
     - reload firewalld
 
 - name: close ports (firewalld-service)
-  firewalld:
+  ansible.posix.firewalld:
     service: "{{ item.name }}"
     permanent: yes
     state: disabled
