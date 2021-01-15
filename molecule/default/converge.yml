@@ -4,8 +4,5 @@
   become: yes
   gather_facts: yes
 
-  # collections:
-  #   - ansible.posix
-
   roles:
     - role: ansible-role-firewall
