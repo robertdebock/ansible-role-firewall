@@ -3,5 +3,4 @@ roles:
   - name: robertdebock.bootstrap
 collections:
   - name: ansible.posix
-  - name: ansible.builtin
   - name: community.general
