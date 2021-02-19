@@ -7,21 +7,21 @@
   delegate_to: localhost
 
 - name: remove conflicting software
-  package:
+  ansible.builtin.package:
     name: "{{ firewall_packages_conflicting }}"
     state: absent
   when:
     - firewall_packages_conflicting is defined
 
 - name: install required software
-  package:
+  ansible.builtin.package:
     name: "{{ firewall_packages_required }}"
     state: present
   when:
     - firewall_packages_required is defined
 
 - name: open ports (ufw)
-  ufw:
+  community.general.ufw:
     rule: "{{ item.rule | default(firewall_default_rule) }}"
     port: "{{ item.name }}"
     proto: "{{ item.protocol | default(firewall_default_protocol) }}"
@@ -34,7 +34,7 @@
     label: "{{ item.name }}"
 
 - name: close ports (ufw)
-  ufw:
+  community.general.ufw:
     rule: "{{ item.rule | default(firewall_default_rule) }}"
     port: "{{ item.name }}"
     proto: "{{ item.protocol | default(firewall_default_protocol) }}"
@@ -118,14 +118,14 @@
     - reload firewalld
 
 - name: enable ufw
-  ufw:
+  community.general.ufw:
     state: enabled
   when:
     - ansible_connection != "docker"
     - firewall_service == "ufw"
 
 - name: configure iptables
-  template:
+  ansible.builtin.template:
     src: iptables.j2
     dest: "{{ firewall_iptables_rulefile }}"
     validate: "iptables-restore --test %s"
@@ -140,7 +140,7 @@
     - reload firewall
 
 - name: start and enable firewall service
-  service:
+  ansible.builtin.service:
     name: "{{ firewall_service }}"
     state: started
     enabled: yes
