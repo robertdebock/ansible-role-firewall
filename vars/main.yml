@@ -13,8 +13,8 @@ _firewall_packages:
     CentOS-8: []
     RedHat-7:
       - ufw
-    RedHat-8: []
-    Rocky-8: []
+    RedHat-8: &RHEL []
+    Rocky-8: *RHEL
     Fedora:
       - ufw
     openSUSE Leap:
@@ -34,10 +34,9 @@ _firewall_packages:
       - firewalld
       - iptables
       - iptables-services
-    RedHat-8:
+    RedHat-8: &RHEL8
       - firewalld
-    Rocky-8:
-      - firewalld
+    Rocky-8: *RHEL8
     Fedora:
       - firewalld
       - python3-firewall
@@ -54,8 +53,8 @@ _firewall_service:
   CentOS-7: firewalld
   CentOS-8: firewalld
   RedHat-7: firewalld
-  RedHat-8: firewalld
-  Rocky-8: firewalld
+  RedHat-8: &RHEL8 firewalld
+  Rocky-8: *RHEL8
   Fedora: firewalld
   openSUSE Leap: firewalld
 
