@@ -20,7 +20,7 @@
           - name: 1337
             state: absent
 
-    - name: remove a firewall rule to close port 1337
+    - name: remove a firewall rule to close port 1337 again
       ansible.builtin.include_role:
         name: ansible-role-firewall
       vars:
