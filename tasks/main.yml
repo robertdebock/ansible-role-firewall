@@ -59,7 +59,7 @@
     - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - firewall_services is defined
     - firewall_service == "firewalld"
-    - item.name is number
+    - (item.name is number) or (item.range is defined and item.range)
   loop_control:
     label: "{{ item.name }}"
   notify:
@@ -93,7 +93,7 @@
     - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - firewall_services is defined
     - firewall_service == "firewalld"
-    - item.name is not number
+    - (item.name is not number) and (item.range is undefined or not item.range)
   loop_control:
     label: "{{ item.name }}"
   notify:
