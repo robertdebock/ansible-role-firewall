@@ -8,12 +8,9 @@ _firewall_packages:
     Alpine:
       - firewalld
       - ufw
-    CentOS-7:
-      - ufw
-    CentOS-8: []
     RedHat-7:
       - ufw
-    RedHat-8: []
+    RedHat: []
     Fedora:
       - ufw
     openSUSE Leap:
@@ -23,17 +20,11 @@ _firewall_packages:
       - ufw
     Alpine:
       - iptables
-    CentOS-7:
-      - firewalld
-      - iptables
-      - iptables-services
-    CentOS-8:
-      - firewalld
     RedHat-7:
       - firewalld
       - iptables
       - iptables-services
-    RedHat-8:
+    RedHat:
       - firewalld
     Fedora:
       - firewalld
@@ -41,9 +32,9 @@ _firewall_packages:
     openSUSE Leap:
       - firewalld
 
-firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['conflicting'][ansible_distribution] | default(_firewall_packages['conflicting']['default'] )) }}"
+firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['conflicting'][ansible_os_family] | default(_firewall_packages['conflicting']['default'] )) }}"
 
-firewall_packages_required: "{{ _firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['required'][ansible_distribution] | default(_firewall_packages['required']['default'] )) }}"
+firewall_packages_required: "{{ _firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['required'][ansible_os_family] | default(_firewall_packages['required']['default'] )) }}"
 
 _firewall_service:
   default: ufw
