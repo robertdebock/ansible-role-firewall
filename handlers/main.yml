@@ -12,3 +12,11 @@
 - name: reload firewalld
   ansible.builtin.command:
     cmd: firewall-cmd --reload
+
+- name: restart NetworkManager
+  ansible.builtin.service:
+    name: NetworkManager
+    state: restarted
+  when:
+    - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
+    - not ansible_check_mode | bool

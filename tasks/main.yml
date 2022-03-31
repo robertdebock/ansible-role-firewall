@@ -147,3 +147,115 @@
   when:
     - ansible_connection not in [ "container", "docker", "community.docker.docker" ]
     - firewall_service is defined
+
+# [Allow adding a select interface to a selected zone](https://github.com/robertdebock/ansible-role-firewall/issues/4)
+- name: |
+    feature | Allow adding a select interface to a selected zone
+      check requirements
+  when:
+    - firewall_service == "firewalld"
+    - firewall_packages_firewalld_nm_fix is defined
+    - firewall_packages_firewalld_nm_fix is iterable
+    - firewall_packages_firewalld_nm_fix|length > 0
+    - firewall_interfaces is defined
+    - firewall_interfaces is iterable
+    - firewall_interfaces|length > 0
+
+  block:
+
+    - name: check networkmanager software
+      ansible.builtin.package:
+        name: "{{ firewall_packages_firewalld_nm_fix }}"
+        state: present
+      check_mode: true
+      changed_when: false
+      register: _firewall_networkmanager_installed
+
+    - name: check networkmanager service running
+      ansible.builtin.systemd:
+        state: started
+        name: NetworkManager
+      check_mode: true
+      changed_when: false
+      ignore_errors: true
+      register: _firewall_networkmanager_service_running
+
+# [Allow adding a select interface to a selected zone](https://github.com/robertdebock/ansible-role-firewall/issues/4)
+- name: |
+    feature | Allow adding a select interface to a selected zone
+      changes
+  when:
+    - _firewall_networkmanager_installed is defined
+    - ( ansible_os_family == 'Suse' and _firewall_networkmanager_installed.state is defined and _firewall_networkmanager_installed.state == 'present' )
+      or (_firewall_networkmanager_installed.msg is defined and _firewall_networkmanager_installed.msg == "Nothing to do")
+      or (_firewall_networkmanager_installed.results is defined and _firewall_networkmanager_installed.results is iterable and (_firewall_networkmanager_installed.results|length > 0))
+    - _firewall_networkmanager_service_running is defined
+    - _firewall_networkmanager_service_running.status is defined
+    - _firewall_networkmanager_service_running.status.ActiveState is defined
+    - _firewall_networkmanager_service_running.status.ActiveState == 'active'
+    - _firewall_networkmanager_service_running.status.SubState is defined
+    - _firewall_networkmanager_service_running.status.SubState == 'running'
+  block:
+
+    - name: get current connection name from interface (networkmanager)
+      ansible.builtin.shell:
+        cmd: |-
+          nmcli -t -f name,device connection show --active | \grep ':{{ _nmcli_con_show.interface }}$' | cut -d: -f 1
+      environment:
+        LANG: 'C'
+        LC_ALL: 'C'
+        LC_MESSAGES: 'C'
+        LC_CTYPE: 'C'
+      loop: "{{ firewall_interfaces }}"
+      changed_when: false
+      register: _firewall_current_connection_name
+      loop_control:
+        label: "{{ _nmcli_con_show.interface }}"
+        loop_var: _nmcli_con_show
+
+    - name: add interface to a zone (networkmanager)
+      community.general.nmcli:
+        type: "{{ _conn_name[_conn_name.ansible_loop_var].type | default('ethernet') }}"
+        conn_name: "{{ _conn_name.stdout }}"
+        ifname: "{{ _conn_name[_conn_name.ansible_loop_var].interface }}"
+        zone: "{{ _conn_name[_conn_name.ansible_loop_var].zone }}"
+        state: present
+        # #start# ipv6 workarround for el7
+        dns6_ignore_auto: "{{ true if ansible_os_family == 'RedHat' and ansible_distribution_major_version is version('7', '==') else omit }}"
+        gw6_ignore_auto: "{{ true if ansible_os_family == 'RedHat' and ansible_distribution_major_version is version('7', '==') else omit }}"
+        # #end# ipv6 workarround for el7
+      loop: "{{ _firewall_current_connection_name.results }}"
+      register: _firewall_interface_zone_assignments
+      when:
+        - _conn_name[_conn_name.ansible_loop_var].state is undefined or ( _conn_name[_conn_name.ansible_loop_var].state is defined and _conn_name[_conn_name.ansible_loop_var].state == "enabled" )
+      loop_control:
+        label: "{{ _conn_name[_conn_name.ansible_loop_var].interface }}"
+        loop_var: _conn_name
+      notify: restart NetworkManager
+
+    - name: add interface to a zone (firewalld-interface)
+      ansible.posix.firewalld:
+        zone: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].zone }}"
+        interface: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].interface }}"
+        permanent: yes
+        state: enabled
+      loop: "{{ _firewall_interface_zone_assignments.results }}"
+      when:
+        - item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].state is undefined or ( item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].state is defined and item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].state == "enabled" )
+      loop_control:
+        label: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].interface }}"
+      notify: reload firewalld
+
+    - name: remove interface from a zone (firewalld-interface)
+      ansible.posix.firewalld:
+        zone: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].zone }}"
+        interface: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].interface }}"
+        permanent: yes
+        state: disabled
+      loop: "{{ _firewall_interface_zone_assignments.results }}"
+      when:
+        - item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].state is defined
+        - item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].state == "disabled"
+      loop_control:
+        label: "{{ item[item.ansible_loop_var][item[item.ansible_loop_var].ansible_loop_var].interface }}"
+      notify: reload firewalld

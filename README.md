@@ -61,11 +61,42 @@ firewall_services:
 #     protocol: tcp
 #   - name: 1337
 #     state: absent
+
+# A list of interfaces you would like to add/remove to/from a zone in firewalld.
+# firewall_interfaces: []
+
+# examples:
+# firewall_interfaces:
+#   - interface: eth0
+#     zone: trusted
+#   - type: bond
+#     interface: bond0
+#     zone: trusted
+#   - interface: ens0
+#     zone: trusted
+#     state: disabled
+
 ```
 
 ## [Requirements](#requirements)
 
 - pip packages listed in [requirements.txt](https://github.com/robertdebock/ansible-role-firewall/blob/master/requirements.txt).
+
+- Feature [Allow adding a select interface to a selected zone.](https://github.com/robertdebock/ansible-role-firewall/issues/4) is only supported on operating systems with firewalld as default firewall software.
+  For details see manpage _firewalld.zones(5)_ "How to set or change a zone for a connection?".
+  This feature will only be usable if the interface is managed by NetworkManager.
+  Suse os-family needs to switch from wicked to NetworkManager, RedHat os-family is using NetworkManger by default.
+  [Requires installing additional packages](https://docs.ansible.com/ansible/latest/collections/community/general/nmcli_module.html#synopsis) otherwise tasks for the feature will be skipped.
+
+    - known issue: collection `community.general is version('3.3.0', '>=')` and `ansible_distribution == 'Fedora' and ansible_distribution_major_version is version('30', '<=')`.
+
+      - _reason_: those versions [pulled in new settings](https://github.com/ansible-collections/community.general/pull/2732/checks) see `routing-rules` in [nm-settings](https://developer-old.gnome.org/NetworkManager/stable/nm-settings-nmcli.html).
+
+        _workarround_: use collection `community.general` version `3.2.0` but this will introduce different issues. therefore  fedora<=30 not supported
+        
+            # on centos7,fedora29,rhel7
+            CRITICAL Idempotence test failed because of the following tasks:
+            *  => ansible-role-firewall : add interface to a zone (networkmanager)
 
 ## [Status of used roles](#status-of-requirements)
 
@@ -89,7 +120,7 @@ This role has been tested on these [container images](https://hub.docker.com/u/r
 |container|tags|
 |---------|----|
 |alpine|all|
-|el|8|
+|el|7,8|
 |debian|all|
 |fedora|all|
 |opensuse|all|
