@@ -13,6 +13,8 @@ _firewall_packages:
     RedHat: []
     Fedora:
       - ufw
+    Suse:
+      - ufw
     openSUSE Leap:
       - ufw
   required:
@@ -23,12 +25,13 @@ _firewall_packages:
     RedHat-7:
       - firewalld
       - iptables
-      - iptables-services
     RedHat:
       - firewalld
     Fedora:
       - firewalld
       - python3-firewall
+    Suse:
+      - firewalld
     openSUSE Leap:
       - firewalld
 
@@ -36,17 +39,29 @@ firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_dis
 
 firewall_packages_required: "{{ _firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['required'][ansible_os_family] | default(_firewall_packages['required']['default'] )) }}"
 
+# On CentOS 8 and Fedora >=29 like systems, the requirements can be met by installing the following packages: NetworkManager.
+# On CentOS 7 and Fedora <=28 like systems, the requirements can be met by installing the following packages: NetworkManager-tui.
+# #skipped# On Ubuntu and Debian like systems, the requirements can be met by installing the following packages: network-manager
+# #skipped# On openSUSE, the requirements can be met by installing the following packages: NetworkManager
+firewall_packages_firewalld_nm_fix: |-
+  [
+  {% if (ansible_os_family    == 'RedHat' and ansible_distribution_major_version is version('7', '=='))
+     or (ansible_distribution == 'Fedora' and ansible_distribution_major_version is version('28', '<=')) %}
+      "NetworkManager-tui"
+  {% elif (ansible_os_family    == 'RedHat' and ansible_distribution_major_version is version('8', '=='))
+       or (ansible_os_family    == 'Suse')
+       or (ansible_distribution == 'Fedora' and ansible_distribution_major_version is version('29', '>='))  %}
+      "NetworkManager"
+  {% endif %}
+  ]
+
 _firewall_service:
   default: ufw
   Alpine: iptables
-  CentOS-7: firewalld
-  CentOS-8: firewalld
-  RedHat-7: firewalld
-  RedHat-8: firewalld
-  Fedora: firewalld
-  openSUSE Leap: firewalld
+  RedHat: firewalld
+  Suse: firewalld
 
-firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default (_firewall_service[ansible_distribution] | default (_firewall_service['default'] )) }}"
+firewall_service: "{{ _firewall_service[ansible_os_family] | default (_firewall_service['default'] ) }}"
 
 _firewall_iptables_rulefile:
   Alpine: /etc/iptables/rules-save

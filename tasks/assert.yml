@@ -64,3 +64,25 @@
   when:
     - firewall_services is defined
     - item.state is defined
+
+- name: test if firewall_interfaces is set correctly
+  ansible.builtin.assert:
+    that:
+      - firewall_interfaces is iterable
+    quiet: yes
+  when:
+    - firewall_interfaces is defined
+
+- name: test if item in firewall_interfaces is set correctly
+  ansible.builtin.assert:
+    that:
+      - item.interface is defined
+      - item.interface is string
+      - item.zone is defined
+      - item.zone is string
+    quiet: yes
+  loop: "{{ firewall_interfaces }}"
+  loop_control:
+    label: "{{ item.interface }}"
+  when:
+    - firewall_interfaces is defined

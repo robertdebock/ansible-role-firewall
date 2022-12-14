@@ -1,0 +1,37 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+    requirements-file: requirements.yml
+driver:
+  name: delegated
+  options:
+    managed: False
+    login_cmd_template: 'ssh {instance} -F "${MOLECULE_SCENARIO_DIRECTORY}/ssh_config"'
+    ansible_connection_options:
+      ansible_connection: ssh
+      ansible_ssh_common_args: '-F "${MOLECULE_SCENARIO_DIRECTORY}/ssh_config"'
+platforms:
+  - name: alma8
+  - name: centos7
+  - name: centos8
+  # - name: fedora28
+  # - name: fedora29
+  - name: fedora35
+  - name: opensuse15
+  - name: rhel7
+  - name: rhel8
+provisioner:
+  name: ansible
+  playbooks:
+    # prepare: ../default/prepare.yml
+    converge: ../default/converge.yml
+  default_sequence:
+    - converge
+  test_sequence:
+    # - prepare
+    - converge
+    # - verify
+  verify_sequence:
+    - converge

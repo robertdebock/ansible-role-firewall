@@ -21,3 +21,17 @@ firewall_services:
 #     protocol: tcp
 #   - name: 1337
 #     state: absent
+
+# A list of interfaces you would like to add/remove to/from a zone in firewalld.
+# firewall_interfaces: []
+
+# examples:
+# firewall_interfaces:
+#   - interface: eth0
+#     zone: trusted
+#   - type: bond
+#     interface: bond0
+#     zone: trusted
+#   - interface: ens0
+#     zone: trusted
+#     state: disabled
