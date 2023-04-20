@@ -8,9 +8,7 @@ These version of [ansible](https://pypi.org/project/ansible/) are supported:
 
 | Version | Supported          |
 | ------- | ------------------ |
-5
 | 5       | :white_check_mark: |
-6
 | 6       | :white_check_mark: |
 
 ## [Reporting a Vulnerability](#reporting-a-vulnarability)
