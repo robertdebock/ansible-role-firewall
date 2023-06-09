@@ -29,6 +29,7 @@
     that:
       - item.name is defined
       - item.name is string
+      - item.name is not none
     quiet: yes
   loop: "{{ firewall_services }}"
   loop_control:
