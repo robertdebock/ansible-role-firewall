@@ -44,11 +44,11 @@ _firewall_service:
   CentOS-7: firewalld
   CentOS-8: firewalld
   RedHat-7: firewalld
-  RedHat-8: firewalld
+  RedHat: firewalld
   Fedora: firewalld
   OracleLinux: firewalld
   openSUSE Leap: firewalld
-firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default (_firewall_service[ansible_distribution] | default (_firewall_service['default'] )) }}"
+firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default (_firewall_service[ansible_os_family] | default (_firewall_service['default'] )) }}"
 
 _firewall_iptables_rulefile:
   Alpine: /etc/iptables/rules-save
