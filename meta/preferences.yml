@@ -1,4 +1,7 @@
 ---
-tox_ansible_versions:
-  - 5
-  - 6
+
+matrix_overrides:
+  amazonlinux:
+    python:
+      - python:3.9
+      - python:3.10
