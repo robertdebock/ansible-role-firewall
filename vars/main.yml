@@ -35,8 +35,8 @@ _firewall_packages:
       - firewalld
     OracleLinux:
       - firewalld
-firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['conflicting'][ansible_os_family] | default(_firewall_packages['conflicting']['default'] )) }}"
-firewall_packages_required: "{{ _firewall_packages['required'][ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_packages['required'][ansible_os_family] | default(_firewall_packages['required']['default'] )) }}"
+firewall_packages_conflicting: "{{ _firewall_packages['conflicting'][ansible_facts['distribution'] ~ '-' ~ ansible_facts['distribution_major_version']] | default(_firewall_packages['conflicting'][ansible_facts['os_family']] | default(_firewall_packages['conflicting']['default'] )) }}"
+firewall_packages_required: "{{ _firewall_packages['required'][ansible_facts['distribution'] ~ '-' ~ ansible_facts['distribution_major_version']] | default(_firewall_packages['required'][ansible_facts['os_family']] | default(_firewall_packages['required']['default'] )) }}"
 
 _firewall_service:
   default: ufw
@@ -50,8 +50,8 @@ _firewall_service:
   Fedora: firewalld
   OracleLinux: firewalld
   openSUSE Leap: firewalld
-firewall_service: "{{ _firewall_service[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default (_firewall_service[ansible_distribution] | default (_firewall_service['default'] )) }}"
+firewall_service: "{{ _firewall_service[ansible_facts['distribution'] ~ '-' ~ ansible_facts['distribution_major_version']] | default (_firewall_service[ansible_facts['distribution']] | default (_firewall_service['default'] )) }}"
 
 _firewall_iptables_rulefile:
   Alpine: /etc/iptables/rules-save
-firewall_iptables_rulefile: "{{ _firewall_iptables_rulefile[ansible_distribution ~ '-' ~ ansible_distribution_major_version] | default(_firewall_iptables_rulefile[ansible_distribution] | default(_firewall_iptables_rulefile['default'] )) }}"
+firewall_iptables_rulefile: "{{ _firewall_iptables_rulefile[ansible_facts['distribution'] ~ '-' ~ ansible_facts['distribution_major_version']] | default(_firewall_iptables_rulefile[ansible_facts['distribution']] | default(_firewall_iptables_rulefile['default'] )) }}"
